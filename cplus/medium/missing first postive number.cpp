@@ -33,7 +33,6 @@ public:
     int firstMissingPositive(vector<int> &nums) {
         int n = nums.size();
         bool isOne = true;
-
         // Judge whether to be one
         for (int i = 0; i < n; i++)
             if (nums[i] == 1)
