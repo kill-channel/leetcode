@@ -1,34 +1,34 @@
 #include <iostream>
+#include<string>
 #include <vector>
 
 using namespace std;
 
 class Solution {
-public:
-    vector<vector<int>> generateMatrix(int n) {
-        int left = 0, right = n - 1, up = 0, low = n - 1;
-        int current = 1;
-        vector<vector<int>> ans;
-        while (true) {
-            for (int i = left; i <= right; i++)
-                ans[i][up] = current++;
-            if (++up >= low)
-                return ans;
+private:
+    int number;
+    string res;
 
-            for (int i = up; i <= low; i++)
-                ans[right][i] = current++;
-            if (--right <= left)
-                return ans;
-
-            for (int i = right; i >= left; i--)
-                ans[i][low] = current++;
-            if (--low <= up)
-                return ans;
-
-            for (int i = low; i >= up; i--)
-                ans[i][left] = current++;
-            if (++left >= right)
-                return ans;
+    void backword(string ans, vector<int> nums) {
+        if (--number == 0) {
+            res = ans;
+            return;
+        }
+        for(int i = 0;i < nums.size();i ++){
+            ans += nums[i];
         }
     }
+
+public:
+    string getPermutation(int n, int k) {
+        number = k;
+        vector<int> nums(n);
+        string ans = "";
+        for (int i = 0; i < nums.size(); i++) {
+            nums[i] = i + 1;
+        }
+        backword(ans, nums);
+        return res;
+    }
 };
+//leetcode submit region end(Prohibit modification and deletion)
