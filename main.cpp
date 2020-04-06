@@ -1,34 +1,35 @@
 #include <iostream>
-#include<string>
 #include <vector>
 
 using namespace std;
+static int a[101][101] = {0};
 
 class Solution {
 private:
-    int number;
-    string res;
+    vector<vector<int>> &grid;
 
-    void backword(string ans, vector<int> nums) {
-        if (--number == 0) {
-            res = ans;
-            return;
-        }
-        for(int i = 0;i < nums.size();i ++){
-            ans += nums[i];
-        }
+    int dfs(int x, int y) {
+        if (grid[x][y] == 1)
+            return 0;
+        if (x == 1 || y == 1)
+            return 1;
+        if (x == 2)
+            return y;
+        if (y == 2)
+            return x;
+
+        if (a[x][y] > 0)
+            return a[x][y];
+        a[x - 1][y] = dfs(x - 1, y);
+        a[x][y - 1] = dfs(x, y - 1);
+        a[x][y] = a[x - 1][y] + a[x][y - 1];
+        return a[x][y];
     }
 
 public:
-    string getPermutation(int n, int k) {
-        number = k;
-        vector<int> nums(n);
-        string ans = "";
-        for (int i = 0; i < nums.size(); i++) {
-            nums[i] = i + 1;
-        }
-        backword(ans, nums);
-        return res;
+    int uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid) {
+        grid = obstacleGrid;
+        return dfs(obstacleGrid.size(), obstacleGrid[0].size());
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
